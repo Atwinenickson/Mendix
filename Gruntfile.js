@@ -17,8 +17,8 @@ module.exports = function(grunt) {
 
         watch: {
             updateWidgetFiles: {
-                files: [  "./src/**/*"],
-                tasks: [ "webpack:develop", "compress:dist", "copy" ],
+                files: ["./src/**/*"],
+                tasks: ["webpack:develop", "compress:dist", "copy"],
                 options: {
                     debounceDelay: 250
                 }
@@ -31,32 +31,32 @@ module.exports = function(grunt) {
                     archive: "./dist/" + pkg.version + "/" + pkg.widgetName + ".mpk",
                     mode: "zip"
                 },
-                files: [ {
+                files: [{
                     expand: true,
                     date: new Date(),
                     store: false,
                     cwd: "./dist/tmp/src",
-                    src: [ "**/*" ]
-                } ]
+                    src: ["**/*"]
+                }]
             }
         },
 
         copy: {
             distDeployment: {
-                files: [ {
+                files: [{
                     dest: "./dist/MxTestProject/deployment/web/widgets",
                     cwd: "./dist/tmp/src/",
-                    src: [ "**/*" ],
+                    src: ["**/*"],
                     expand: true
-                } ]
+                }]
             },
             mpk: {
-                files: [ {
+                files: [{
                     dest: "./dist/MxTestProject/widgets",
                     cwd: "./dist/" + pkg.version + "/",
-                    src: [ pkg.widgetName + ".mpk" ],
+                    src: [pkg.widgetName + ".mpk"],
                     expand: true
-                } ]
+                }]
             }
         },
 
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 
         clean: {
             options: {
-                force:true
+                force: true
             },
             build: [
                 "./dist/" + pkg.version + "/" + pkg.widgetName + "/*",
@@ -89,16 +89,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-webpack");
 
-    grunt.registerTask("default", [ "clean build", "watch" ]);
+    grunt.registerTask("default", ["clean build", "watch"]);
     grunt.registerTask(
         "clean build",
-        "Compiles all the assets and copies the files to the dist directory.",
-        [ "checkDependencies", "clean:build", "webpack:develop", "compress:dist", "copy" ]
+        "Compiles all the assets and copies the files to the dist directory.", ["checkDependencies", "clean:build", "webpack:develop", "compress:dist", "copy"]
     );
     grunt.registerTask(
         "release",
-        "Compiles all the assets and copies the files to the dist directory. Minified without source mapping",
-        [ "checkDependencies", "clean:build", "webpack:release", "compress:dist", "copy" ]
+        "Compiles all the assets and copies the files to the dist directory. Minified without source mapping", ["checkDependencies", "clean:build", "webpack:release", "compress:dist", "copy"]
     );
-    grunt.registerTask("build", [ "clean build" ]);
+    grunt.registerTask("build", ["clean build"]);
 };
